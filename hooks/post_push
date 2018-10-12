@@ -1,0 +1,4 @@
+#!/bin/bash
+VERSION=`docker inspect -f "{{ index .Config.Labels \"org.label-schema.version\"}}" $IMAGE_NAME`
+docker tag $IMAGE_NAME $DOCKER_REPO:$VERSION
+docker push $DOCKER_REPO:$VERSION
