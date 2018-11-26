@@ -16,13 +16,20 @@ if(empty($_POST['font']) || !file_exists('fonts/'.$_POST['font'])) {
 
 require('ImageMark.php');
 
+if(!file_exists('output')) {
+	mkdir('output');
+}
+$tempnam = basename($uploadImage);
+$combinedImgPath = 'output/combined_'.$tempnam.'.png';
+$maskImgPath = 'output/mask_'.$tempnam.'.png';
+
 $combined = ImageMark::write($uploadImage, $_POST['text'], $_POST['font']);
 $combined->setImageFormat('png');
-file_put_contents('combined.png', $combined->getImageBlob());
+file_put_contents($combinedImgPath, $combined->getImageBlob());
 
 $mask = ImageMark::read($combined);
 $mask->setImageFormat('png');
-file_put_contents('mask.png', $mask->getImageBlob());
+file_put_contents($maskImgPath, $mask->getImageBlob());
 
 ?>
 <html>
@@ -35,7 +42,7 @@ file_put_contents('mask.png', $mask->getImageBlob());
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   </head>
   <body class="text-center">
-    <h1 class="h2">Invisible mask demo</h1>
+    <h1 class="h2">Invisible Mask Demo</h1>
     <div id="carousel" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carousel" data-slide-to="0" class="active"></li>
@@ -43,13 +50,13 @@ file_put_contents('mask.png', $mask->getImageBlob());
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img class="d-block w-100" src="combined.png" alt="First slide">
+          <img class="d-block w-100" src="<?=$combinedImgPath;?>" alt="First slide">
           <div class="carousel-caption d-none d-md-block">
             <h5>Combined Image</h5>
           </div>
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100" src="mask.png" alt="Second slide">
+          <img class="d-block w-100" src="<?=$maskImgPath;?>" alt="Second slide">
           <div class="carousel-caption d-none d-md-block">
             <h5>Mask Image</h5>
           </div>

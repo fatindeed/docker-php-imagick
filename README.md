@@ -1,26 +1,18 @@
-# 图片增加盲水印演示
-
-[![Docker Stars](https://img.shields.io/docker/stars/fatindeed/php-imagick.svg)](https://hub.docker.com/r/fatindeed/php-imagick/) [![Docker Pulls](https://img.shields.io/docker/pulls/fatindeed/php-imagick.svg)](https://hub.docker.com/r/fatindeed/php-imagick/) [![Docker Automated build](https://img.shields.io/docker/automated/fatindeed/php-imagick.svg)](https://hub.docker.com/r/fatindeed/php-imagick/) [![Docker Build Status](https://img.shields.io/docker/build/fatindeed/php-imagick.svg)](https://hub.docker.com/r/fatindeed/php-imagick/)
-
-[![Download size](https://images.microbadger.com/badges/image/fatindeed/php-imagick.svg)](https://microbadger.com/images/fatindeed/php-imagick "Get your own image badge on microbadger.com") [![Version](https://images.microbadger.com/badges/version/fatindeed/php-imagick.svg)](https://microbadger.com/images/fatindeed/php-imagick "Get your own version badge on microbadger.com") [![Source code](https://images.microbadger.com/badges/commit/fatindeed/php-imagick.svg)](https://microbadger.com/images/fatindeed/php-imagick "Get your own commit badge on microbadger.com")
+# 图片增加盲水印演示(PHP版)
 
 ## 使用方法
 
 ```sh
-docker run -d -p 80:80 fatindeed/php-imagick
+docker run -d --rm -p 80:80 -v "$PWD/www-data":/home/www-data -w /home/www-data fatindeed/php:imagick php -S 0.0.0.0:80
 ```
 
-打开浏览器演示
+打开浏览器`http://<docker-host>`演示
 
 ## 常见问题
 
 1.  关于字体和字符集
 
-    默认镜像中只有一个 *Arial* 字体，如需显示其它字符集（如中文），请手动挂载字体文件到`/home/www-data/fonts`目录，演示页面即会出现该字体选项。
-
-    ```sh
-    docker run -d -p 80:80 -v /path/to/fonts:/home/www-data/fonts fatindeed/php-imagick
-    ```
+    默认镜像中只有一个 *Arial* 字体，如需显示其它字符集（如中文），请手动复制字体文件到`www-data/fonts`目录，演示页面即会出现该字体选项，选择它即可。
 
 ## 参考资料
 
